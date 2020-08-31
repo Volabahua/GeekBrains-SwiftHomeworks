@@ -1,4 +1,5 @@
 import UIKit
+import Foundation
 
 //Задание 1
 //Написать функцию, которая определяет, четное число или нет.
@@ -61,7 +62,7 @@ print("Чётные элементы массива которые кратны 
 //Написать функцию, которая добавляет в массив новое число Фибоначчи, и добавить при помощи нее 100 элементов.
 
 //Рекурсивная функция вызывает саму себя для обнаружения чисел Фибоначчи. n - порядковый номер элемента последовательности.
-func fibonacchi(n: Int) -> Int {
+func fibonacchi(n: UInt64) -> UInt64 {
     if n == 0 {
         return 0
     }
@@ -70,6 +71,26 @@ func fibonacchi(n: Int) -> Int {
     }
     return fibonacchi(n: n-2)+fibonacchi(n: n-1);
 }
+
+//Функция создает возрастающий массив из 100 чисел фибоначчи
+func fibonacchiArrayBuilder(array:[UInt64]) -> [UInt64] {
+    var newArray = array
+    for i in 0...100 {
+        if i<2 {
+            newArray.append(1)
+        } else {
+            newArray.append(newArray[i-1]+newArray[i-2])
+        }
+    }
+    return newArray
+}
+
+//Пробую создать массив с помощью функции
+var myFiboArr = [UInt64]()
+myFiboArr = fibonacchiArrayBuilder(array: myFiboArr)
+
+//Диапазон к которому надо стремиться
+UInt64.max
 
 //Объявим пустой массив чтобы хранить в нем числа Фибоначчи.
 var fibonacchiArray: [Int] = []
@@ -82,4 +103,68 @@ for _ in 1...100 {
 
 //Выведем полученный массив из 100 чисел фибоначи
 print("Полученный массив из чисел Фибоначчи : \(fibonacchiArray)")
+
+//Задание 6*
+//Заполнить массив из 100 элементов различными простыми числами. Натуральное число, большее единицы, называется простым, если оно делится только на себя и на единицу.
+
+//Функция создаёт массив из чисел от 2 до n
+func arrayPrimeBuilder( legnth: Int ) -> [Int] {
+    var newArray = [Int]()
+    var num = 2
+    for _ in 1...legnth {
+        newArray.append(num)
+        num += 1
+    }
+    return newArray
+}
+
+//Создадим массив из 100 чисел
+var myPrimeArray = arrayPrimeBuilder(legnth: 100)
+
+func goToPrime(_ n: Int){
+    var myPrime = [Int]()
+    for i in 1...(n+1){
+        myPrime.append(i)
+    }
+    myPrime[1] = 0
+    var i = 2
+    while i <= n {
+        if myPrime[i] != 0 {
+            var j = i + i
+            while j<=n{
+                myPrime[j] = 0
+                j=j+i
+            }
+        }
+        i+=1
+    }
+    myPrime = set(myPrime)
+    myPrime.remove(at: 0)
+    print(myPrime)
+}
+
+
+
+/* Попытка
+
+//Проверим простое ли число.
+func isPrime(_ number: Int) -> Bool {
+return number > 1 && !(2..<number).contains { number % $0 == 0 }
+}
+
+func goToPrime(_ array: [Int]) -> [Int]{
+    var newArray = array
+    for element in newArray {
+        if isPrime(element) == true {
+            newArray.append(element)
+        } else {
+            continue
+        }
+    }
+    print(newArray)
+    return newArray
+}
+
+print(goToPrime(myPrimeArray))*/
+
 

@@ -6,23 +6,23 @@ import UIKit
 //Создадим случайное число от 1 до 100 для проверки в первых двух заданиях.
 let randomNumber: Int = Int.random(in: 1...100)
 
-//функция проверяет на чётность
+//функция проверяет на чётность.
 func isNumEven(num: Int) {
     num%2 == 0 ? print("Число \(num) четное") : print("Число \(num) нечетное")
 }
 
-//Проверим наше рандомное число на четность
+//Проверим наше рандомное число на четность.
 isNumEven(num: randomNumber)
 
 //Задание 2
 //Написать функцию, которая определяет, делится ли число без остатка на 3.
 
-//функция проверяет на кратность трём
+//Функция проверяет на кратность трём.
 func isMultipleOfThreen(num: Int) {
     num%3 == 0 ? print("Число \(num) кратно трём") : print("Число \(num) не кратно трём")
 }
 
-//Проверим наше рандомное число на кратность трём
+//Проверим наше рандомное число на кратность трём.
 isMultipleOfThreen(num: randomNumber)
 
 //Задание 3
@@ -39,7 +39,21 @@ func arrayBuilder(array: [Int] ) -> [Int] {
     return newArray
 }
 
-//Создадим возрастающий массив из ста случайных Int чисел
-let myArrayHundred = arrayBuilder(array: [])
-print(myArrayHundred)
+//Создадим возрастающий массив из ста случайных Int чисел.
+var myArray = arrayBuilder(array: [])
+print(myArray)
+
+//Задание 4
+//Удалить из этого массива все четные числа и все числа, которые не делятся на 3.
+
+//Функция проверяет каждый элемент массива на четность и кратность трём и оставляет только те которые отвечают обоим условиям.
+func arrayMultipleFilter(array: [Int]) -> [Int] {
+    let newArray = array
+    var filtredArray = newArray.filter({$0 % 2==0})
+    filtredArray = filtredArray.filter({$0 % 3==0})
+    return filtredArray
+}
+
+//Профильтруем полученный нами массив из 100 элементов оставив только четные элементы кратные трём.
+print("Чётные элементы массива которые кратны трём \(arrayMultipleFilter(array: myArray))")
 

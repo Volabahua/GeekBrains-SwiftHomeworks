@@ -91,6 +91,15 @@ func arrayPrimeBuilder( legnth: Int ) -> [Int] {
     return newArray
 }
 
+var primeArray = arrayPrimeBuilder(legnth: 100)
+
+//Проверим простое ли число.
+func isPrime(_ number: Int) -> Bool {
+return number > 1 && !(2..<number).contains { number % $0 == 0 }
+}
+
+isPrime(5)
+
 /* Попытка
 
 //Проверим простое ли число.

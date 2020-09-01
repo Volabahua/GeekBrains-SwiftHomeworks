@@ -1,5 +1,4 @@
 import UIKit
-import Foundation
 
 //Задание 1
 //Написать функцию, которая определяет, четное число или нет.
@@ -91,33 +90,6 @@ func arrayPrimeBuilder( legnth: Int ) -> [Int] {
     }
     return newArray
 }
-
-//Создадим массив из 100 чисел
-var myPrimeArray = arrayPrimeBuilder(legnth: 100)
-
-func goToPrime(_ n: Int){
-    var myPrime = [Int]()
-    for i in 1...(n+1){
-        myPrime.append(i)
-    }
-    myPrime[1] = 0
-    var i = 2
-    while i <= n {
-        if myPrime[i] != 0 {
-            var j = i + i
-            while j<=n{
-                myPrime[j] = 0
-                j=j+i
-            }
-        }
-        i+=1
-    }
-    myPrime = set(myPrime)
-    myPrime.remove(at: 0)
-    print(myPrime)
-}
-
-
 
 /* Попытка
 

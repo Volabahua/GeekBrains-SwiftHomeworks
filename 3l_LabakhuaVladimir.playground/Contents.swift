@@ -1,8 +1,31 @@
 import UIKit
+
 //Задание 1
 //Описать несколько структур – любой легковой автомобиль SportCar и любой грузовик TrunkCar.
 
+enum SportCarBrands {
+    case lamborgini, ferrari, bugatti, bentley, porshe, koenigsegg
+}
 
+enum TrunkCarBrands {
+    case kenworth, freightliner, international, caterpillar, mack, autocar
+}
+
+struct SportCar {
+    let carBrand: SportCarBrands
+    let yearOfIssue: UInt
+    let engineIsOn: Bool
+    let windowsIsOpen: Bool
+    let filledTrunkVolume: UInt
+}
+
+struct TrunkCar {
+    let carBrand: TrunkCarBrands
+    let yearOfIssue: UInt
+    let engineIsOn: Bool
+    let windowsIsOpen: Bool
+    let filledTrunkVolume: UInt
+}
 
 //Задание 2
 //Описать в каждом наследнике специфичные для него свойства.Структуры должны содержать марку авто, год выпуска, объем багажника/кузова, запущен ли двигатель, открыты ли окна, заполненный объем багажника.

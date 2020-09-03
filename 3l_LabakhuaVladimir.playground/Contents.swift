@@ -23,34 +23,20 @@ enum ChangeWindowsStatus {
     case openWindows, closeWindows
 }
 
-enum CarType{
-    case sportCar, trunkCar
+enum CarActions{
+    case openWindows, closeWindows, furnOnEngine, turnOffEngine
 }
+
 
 struct SportCar {
     let carBrand: SportCarBrands
     let yearOfIssue: UInt
     let trunkValue: UInt
     var engineIsOn: Bool
-    mutating func engineStatus(mode: ChangeEngineStatus) {
-        switch mode {
-        case .furnOnEngine:
-            self.engineIsOn = true
-        case .turnOffEngine:
-            self.engineIsOn = false
-        }
-    }
     var windowsIsOpen: Bool
-    mutating func windowsStatus(mode: ChangeWindowsStatus) {
-        switch mode {
-        case .openWindows:
-            self.windowsIsOpen = true
-        case .closeWindows:
-            self.windowsIsOpen = false
-        }
-    }
     var filledTrunkVolume: Int
-    mutating func changeCargo(cargoVolume: Int, mode: ChangeCargoValue) {
+    
+    mutating func changeCargo(mode: ChangeCargoValue, cargoVolume: Int) {
         switch mode  {
         case .loadCargo:
             self.filledTrunkVolume += cargoVolume
@@ -58,37 +44,49 @@ struct SportCar {
             self.filledTrunkVolume -= cargoVolume
         }
     }
+    
+    mutating func carActions(action: CarActions) {
+        switch action {
+        case .furnOnEngine:
+            self.engineIsOn = true
+        case .turnOffEngine:
+            self.engineIsOn = false
+        case .openWindows:
+            self.windowsIsOpen = true
+        case .closeWindows:
+            self.windowsIsOpen = false
+        }
+    }
 }
+    
 
 struct TrunkCar {
     let carBrand: TrunkCarBrands
     let yearOfIssue: UInt
     let trunkValue: UInt
     var engineIsOn: Bool
-    mutating func engineStatus(mode: ChangeEngineStatus) {
-        switch mode {
-        case .furnOnEngine:
-            self.engineIsOn = true
-        case .turnOffEngine:
-            self.engineIsOn = false
-        }
-    }
     var windowsIsOpen: Bool
-    mutating func windowsStatus(mode: ChangeWindowsStatus) {
-        switch mode {
-        case .openWindows:
-            self.windowsIsOpen = true
-        case .closeWindows:
-            self.windowsIsOpen = false
-        }
-    }
     var filledTrunkVolume: Int
-    mutating func changeCargo(cargoVolume: Int, mode: ChangeCargoValue) {
+    
+    mutating func changeCargo(mode: ChangeCargoValue, cargoVolume: Int) {
         switch mode  {
         case .loadCargo:
             self.filledTrunkVolume += cargoVolume
         case .unloadCargo:
             self.filledTrunkVolume -= cargoVolume
+        }
+    }
+    
+    mutating func carActions(action: CarActions) {
+        switch action {
+        case .furnOnEngine:
+            self.engineIsOn = true
+        case .turnOffEngine:
+            self.engineIsOn = false
+        case .openWindows:
+            self.windowsIsOpen = true
+        case .closeWindows:
+            self.windowsIsOpen = false
         }
     }
 }
@@ -103,25 +101,24 @@ var sportcar1 = SportCar(carBrand: .lamborgini, yearOfIssue: 2018, trunkValue: 2
 //Задание 3
 //Описать перечисление с возможными действиями с автомобилем: запустить/заглушить двигатель, открыть/закрыть окна, погрузить/выгрузить из кузова/багажника груз определенного объема.
 
-
-
-
 //Задание 4
 //Добавить в структуры метод с одним аргументом типа перечисления, который будет менять свойства структуры в зависимости от действия.
-
-
 
 //Задание 5
 //Инициализировать несколько экземпляров структур. Применить к ним различные действия.
 
-truck1.windowsStatus(mode: .openWindows)
-truck1.engineStatus(mode: .furnOnEngine)
-truck1.changeCargo(cargoVolume: 7500, mode: .unloadCargo)
+truck1.carActions(action: .openWindows)
+truck1.carActions(action: .furnOnEngine)
+truck1.changeCargo(mode: .unloadCargo, cargoVolume: 7500)
 
-sportcar1.windowsStatus(mode: .closeWindows)
-sportcar1.engineStatus(mode: .turnOffEngine)
-sportcar1.changeCargo(cargoVolume: 20, mode: .loadCargo)
+sportcar1.carActions(action: .closeWindows)
+sportcar1.carActions(action: .turnOffEngine)
+sportcar1.changeCargo( mode: .loadCargo, cargoVolume: 20)
 
 
 //Задание 6
 //Вывести значения свойств экземпляров в консоль.
+
+print(sportcar1)
+
+print(truck1)

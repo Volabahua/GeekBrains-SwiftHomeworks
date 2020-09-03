@@ -23,7 +23,6 @@ enum CarActions{
     case openWindows, closeWindows, furnOnEngine, turnOffEngine
 }
 
-
 struct SportCar {
     let carBrand: SportCarBrands
     let yearOfIssue: UInt
@@ -56,7 +55,6 @@ struct SportCar {
     }
 }
     
-
 struct TrunkCar {
     let carBrand: TrunkCarBrands
     let yearOfIssue: UInt
@@ -115,7 +113,6 @@ sportCar.carActions(action: .closeWindows)
 sportCar.carActions(action: .turnOffEngine)
 sportCar.changeCargo( mode: .loadCargo, cargoVolume: 120)
 
-
 //Задание 6
 //Вывести значения свойств экземпляров в консоль.
 
@@ -124,3 +121,5 @@ print(sportCar)
 
 //Выведем в консоль состояние Трака после изменения
 print(truck)
+
+//Конец домашнего задания

@@ -11,18 +11,14 @@ enum TrunkCarBrands {
     case kenworth, freightliner, international, caterpillar, mack, autocar
 }
 
-enum ChangeEngineStatus {
-    case furnOnEngine, turnOffEngine
-}
-
+//Задание 3
+//Описать перечисление с возможными действиями с автомобилем: запустить/заглушить двигатель, открыть/закрыть окна, погрузить/выгрузить из кузова/багажника груз определенного объема.
 enum ChangeCargoValue {
     case loadCargo, unloadCargo
 }
 
-enum ChangeWindowsStatus {
-    case openWindows, closeWindows
-}
-
+//Задание 4
+//Добавить в структуры метод с одним аргументом типа перечисления, который будет менять свойства структуры в зависимости от действия.
 enum CarActions{
     case openWindows, closeWindows, furnOnEngine, turnOffEngine
 }
@@ -45,6 +41,7 @@ struct SportCar {
         }
     }
     
+    //К заданию 4
     mutating func carActions(action: CarActions) {
         switch action {
         case .furnOnEngine:
@@ -77,6 +74,7 @@ struct TrunkCar {
         }
     }
     
+    //К заданию 4
     mutating func carActions(action: CarActions) {
         switch action {
         case .furnOnEngine:
@@ -94,31 +92,35 @@ struct TrunkCar {
 //Задание 2
 //Описать в каждом наследнике специфичные для него свойства.Структуры должны содержать марку авто, год выпуска, объем багажника/кузова, запущен ли двигатель, открыты ли окна, заполненный объем багажника.
 
-var truck1 = TrunkCar(carBrand: .kenworth, yearOfIssue: 1994, trunkValue: 15000, engineIsOn: false, windowsIsOpen: false, filledTrunkVolume: 10000)
+//Создадим Спорткар
+var sportCar = SportCar(carBrand: .lamborgini, yearOfIssue: 2018, trunkValue: 250, engineIsOn: true, windowsIsOpen: true, filledTrunkVolume: 20)
 
-var sportcar1 = SportCar(carBrand: .lamborgini, yearOfIssue: 2018, trunkValue: 250, engineIsOn: true, windowsIsOpen: true, filledTrunkVolume: 20)
+//Создадим Трак
+var truck = TrunkCar(carBrand: .kenworth, yearOfIssue: 1994, trunkValue: 15000, engineIsOn: false, windowsIsOpen: false, filledTrunkVolume: 10000)
 
-//Задание 3
-//Описать перечисление с возможными действиями с автомобилем: запустить/заглушить двигатель, открыть/закрыть окна, погрузить/выгрузить из кузова/багажника груз определенного объема.
+//Пропишем в консоль изначальное состояние Спорткара
+print(sportCar)
 
-//Задание 4
-//Добавить в структуры метод с одним аргументом типа перечисления, который будет менять свойства структуры в зависимости от действия.
+//Пропишем в консоль изначальное состояние Трака
+print(truck)
 
 //Задание 5
 //Инициализировать несколько экземпляров структур. Применить к ним различные действия.
 
-truck1.carActions(action: .openWindows)
-truck1.carActions(action: .furnOnEngine)
-truck1.changeCargo(mode: .unloadCargo, cargoVolume: 7500)
+truck.carActions(action: .openWindows)
+truck.carActions(action: .furnOnEngine)
+truck.changeCargo(mode: .unloadCargo, cargoVolume: 7500)
 
-sportcar1.carActions(action: .closeWindows)
-sportcar1.carActions(action: .turnOffEngine)
-sportcar1.changeCargo( mode: .loadCargo, cargoVolume: 20)
+sportCar.carActions(action: .closeWindows)
+sportCar.carActions(action: .turnOffEngine)
+sportCar.changeCargo( mode: .loadCargo, cargoVolume: 120)
 
 
 //Задание 6
 //Вывести значения свойств экземпляров в консоль.
 
-print(sportcar1)
+//выведем в консоль состояние Спорткара после изменения
+print(sportCar)
 
-print(truck1)
+//Выведем в консоль состояние Трака после изменения
+print(truck)

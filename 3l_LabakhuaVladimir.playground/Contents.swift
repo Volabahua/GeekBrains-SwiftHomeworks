@@ -29,7 +29,7 @@ struct SportCar {
     mutating func closeWindows() {
         self.windowsIsOpen = false
     }
-    var filledTrunkVolume: UInt
+    var filledTrunkVolume: Int
     mutating func loadCargo(cargoVolume: Int) {
         self.filledTrunkVolume += cargoVolume
     }

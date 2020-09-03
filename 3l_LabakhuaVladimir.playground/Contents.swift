@@ -28,19 +28,23 @@ struct SportCar {
     let yearOfIssue: UInt
     let trunkValue: UInt
     var engineIsOn: Bool
-//    mutating func turnOnEngine() {
-//        self.engineIsOn = true
-//    }
-//    mutating func turnOffEngine() {
-//        self.engineIsOn = false
-//    }
+    mutating func engineStatus(mode: ChangeEngineStatus) {
+        switch mode {
+        case .furnOnEngine:
+            self.engineIsOn = true
+        case .turnOffEngine:
+            self.engineIsOn = false
+        }
+    }
     var windowsIsOpen: Bool
-//    mutating func openWindows() {
-//        self.windowsIsOpen = true
-//    }
-//    mutating func closeWindows() {
-//        self.windowsIsOpen = false
-//    }
+    mutating func windowsStatus(mode: ChangeWindowsStatus) {
+        switch mode {
+        case .openWindows:
+            self.windowsIsOpen = true
+        case .closeWindows:
+            self.windowsIsOpen = false
+        }
+    }
     var filledTrunkVolume: Int
     mutating func changeCargo(cargoVolume: Int, mode: ChangeCargoValue) {
         switch mode  {
@@ -57,18 +61,22 @@ struct TrunkCar {
     let yearOfIssue: UInt
     let trunkValue: UInt
     var engineIsOn: Bool
-    mutating func turnOnEngine() {
-        self.engineIsOn = true
-    }
-    mutating func turnOffEngine() {
-        self.engineIsOn = false
+    mutating func engineStatus(mode: ChangeEngineStatus) {
+        switch mode {
+        case .furnOnEngine:
+            self.engineIsOn = true
+        case .turnOffEngine:
+            self.engineIsOn = false
+        }
     }
     var windowsIsOpen: Bool
-    mutating func openWindows() {
-        self.windowsIsOpen = true
-    }
-    mutating func closeWindows() {
-        self.windowsIsOpen = false
+    mutating func windowsStatus(mode: ChangeWindowsStatus) {
+        switch mode {
+        case .openWindows:
+            self.windowsIsOpen = true
+        case .closeWindows:
+            self.windowsIsOpen = false
+        }
     }
     var filledTrunkVolume: Int
     mutating func changeCargo(cargoVolume: Int, mode: ChangeCargoValue) {
@@ -79,7 +87,6 @@ struct TrunkCar {
             self.filledTrunkVolume -= cargoVolume
         }
     }
-    
 }
 
 //Задание 2
@@ -103,12 +110,12 @@ var sportcar1 = SportCar(carBrand: .lamborgini, yearOfIssue: 2018, trunkValue: 2
 //Задание 5
 //Инициализировать несколько экземпляров структур. Применить к ним различные действия.
 
-truck1.openWindows()
-truck1.turnOnEngine()
-truck1.unloadCargo(cargoVolume: 7500)
+truck1.windowsStatus(mode: .openWindows)
+truck1.engineStatus(mode: .furnOnEngine)
+truck1.changeCargo(cargoVolume: 7500, mode: .unloadCargo)
 
-
-//sportcar1.loadCargo(cargoVolume: 100)
+sportcar1.windowsStatus(mode: .closeWindows)
+sportcar1.engineStatus(mode: .turnOffEngine)
 sportcar1.changeCargo(cargoVolume: 20, mode: .loadCargo)
 
 

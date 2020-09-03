@@ -23,6 +23,10 @@ enum ChangeWindowsStatus {
     case openWindows, closeWindows
 }
 
+enum CarType{
+    case sportCar, trunkCar
+}
+
 struct SportCar {
     let carBrand: SportCarBrands
     let yearOfIssue: UInt

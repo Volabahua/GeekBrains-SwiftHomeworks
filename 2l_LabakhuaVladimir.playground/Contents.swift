@@ -101,8 +101,10 @@ func arrayPrimeBuilder( legnth: Int) -> [Int] {
     return newArray
 }
 
-//Создадим возрастающий массив из 100 натуральных чисел идущих
+//Создадим возрастающий массив из 100 натуральных чисел идущих.
 var primeArray = arrayPrimeBuilder(legnth: 100)
-print("Получен массив из натуральных чисел - \(primeArray)")
+
+//Выведем полученный массив
+print("Получен массив из \(primeArray.count) натуральных чисел - \(primeArray)")
 
 //Конец домашнего задания

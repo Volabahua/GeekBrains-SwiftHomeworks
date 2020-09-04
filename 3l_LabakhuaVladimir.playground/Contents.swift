@@ -3,8 +3,13 @@ import UIKit
 //Задание 1
 //Описать несколько структур – любой легковой автомобиль SportCar и любой грузовик TrunkCar.
 
-enum SportCarBrands {
-    case lamborgini, ferrari, bugatti, bentley, porshe, koenigsegg
+enum SportCarBrands: String {
+    case lamborgini = "Lamborgini"
+    case ferrari = "Ferrari"
+    case bugatti = "Vugatti"
+    case bentley = "Bentley"
+    case porshe = "Porshe"
+    case koenigsegg = "Koenigsegg"
 }
 
 enum TrunkCarBrands {
@@ -124,7 +129,7 @@ struct TrunkCar {
 //Описать в каждом наследнике специфичные для него свойства.Структуры должны содержать марку авто, год выпуска, объем багажника/кузова, запущен ли двигатель, открыты ли окна, заполненный объем багажника.
 
 //Создадим Спорткар
-var sportCar = SportCar(carBrand: .lamborgini, yearOfIssue: 2018, trunkValue: 250, engineIsOn: true, windowsIsOpen: true, filledTrunkVolume: 20)
+var sportCar = SportCar(carBrand: , yearOfIssue: 2018, trunkValue: 250, engineIsOn: true, windowsIsOpen: true, filledTrunkVolume: 20)
 
 //Создадим Трак
 var truck = TrunkCar(carBrand: .kenworth, yearOfIssue: 1994, trunkValue: 15000, engineIsOn: false, windowsIsOpen: false, filledTrunkVolume: 10000)

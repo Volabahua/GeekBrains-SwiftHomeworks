@@ -3,13 +3,8 @@ import UIKit
 //Задание 1
 //Описать несколько структур – любой легковой автомобиль SportCar и любой грузовик TrunkCar.
 
-enum SportCarBrands: String {
-    case lamborgini = "Lamborgini"
-    case ferrari = "Ferrari"
-    case bugatti = "Vugatti"
-    case bentley = "Bentley"
-    case porshe = "Porshe"
-    case koenigsegg = "Koenigsegg"
+enum SportCarBrands {
+    case lamborgini, ferrari, bugatti, bentley, porshe, koenigsegg
 }
 
 enum TrunkCarBrands {
@@ -39,6 +34,7 @@ struct SportCar {
     mutating func changeCargo(mode: ChangeCargoValue, cargoVolume: Int) {
         switch mode  {
         case .loadCargo:
+            print("Вы собираетесь положить \(cargoVolume) груза в багажник Спорткара.")
             let guardCargo = self.filledTrunkVolume + cargoVolume
             guard  guardCargo < trunkValue else {
                 print("Вы не можете положить этот груз, в багажнике недостаточно места \nОперация не будет выполнена!")
@@ -48,6 +44,7 @@ struct SportCar {
             print("После погрузки груза в багажнике стало \(guardCargo) груза")
 
         case .unloadCargo:
+            print("Вы собираетесь выгрузить \(cargoVolume) груза из багажника Спорткара.")
             let guardCargo = self.filledTrunkVolume - cargoVolume
             guard  guardCargo > 0 else {
                 print("Вы не можете выгрузить этот груз, в багажнике его недостаточно \nОперация не будет выполнена!")
@@ -88,6 +85,7 @@ struct TrunkCar {
     mutating func changeCargo(mode: ChangeCargoValue, cargoVolume: Int) {
         switch mode  {
         case .loadCargo:
+            print("Вы собираетесь положить \(cargoVolume) груза в кузов Трака.")
             let guardCargo = self.filledTrunkVolume + cargoVolume
             guard  guardCargo < trunkValue else {
                 print("Вы не можете положить этот груз, в кузове недостаточно места \nОперация не будет выполнена!")
@@ -96,6 +94,7 @@ struct TrunkCar {
             self.filledTrunkVolume += cargoVolume
             print("После погрузки груза в кузове стало \(guardCargo) груза")
         case .unloadCargo:
+            print("Вы собираетесь выгрузить \(cargoVolume) груза из кузова Трака.")
             let guardCargo = self.filledTrunkVolume - cargoVolume
             guard  guardCargo > 0 else {
                 print("Вы не можете выгрузить этот груз, в кузове его недостаточно \nОперация не будет выполнена!")
@@ -129,7 +128,7 @@ struct TrunkCar {
 //Описать в каждом наследнике специфичные для него свойства.Структуры должны содержать марку авто, год выпуска, объем багажника/кузова, запущен ли двигатель, открыты ли окна, заполненный объем багажника.
 
 //Создадим Спорткар
-var sportCar = SportCar(carBrand: , yearOfIssue: 2018, trunkValue: 250, engineIsOn: true, windowsIsOpen: true, filledTrunkVolume: 20)
+var sportCar = SportCar(carBrand: .lamborgini, yearOfIssue: 2018, trunkValue: 250, engineIsOn: true, windowsIsOpen: true, filledTrunkVolume: 20)
 
 //Создадим Трак
 var truck = TrunkCar(carBrand: .kenworth, yearOfIssue: 1994, trunkValue: 15000, engineIsOn: false, windowsIsOpen: false, filledTrunkVolume: 10000)

@@ -158,3 +158,5 @@ man.stopEngine()
 
 print(honda)
 print(man)
+
+//Конец домашнего задания

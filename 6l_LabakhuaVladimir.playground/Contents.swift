@@ -3,135 +3,121 @@ import UIKit
 //Задание 1
 //Реализовать свой тип коллекции «очередь» (queue) c использованием дженериков.
 
-protocol Car {
-    var color: UIColor { get set }
-    var yearOfIssue: UInt { get set }
-    var trunkValue: UInt { get set }
-    var engineIsOn: Bool { get set }
-    var windowsIsOpen: Bool { get set }
-    var filledTrunkVolume: Int { get set }
+protocol TriangleProtocol {
+    var AB:Double {get set}
+    var BC:Double {get set}
+    var AC:Double {get set}
+    var perimetr:Double {get set}
+    var area:Double {get set}
 }
 
-extension Car {
-    mutating func openWindow() {
-        self.windowsIsOpen = true
-        print("Окна открыты")
-    }
+protocol QuadrangleProtocol {
+    var AB:Double {get set}
+    var BC:Double {get set}
+    var CD:Double {get set}
+    var AD:Double {get set}
+    var perimetr:Double {get set}
+    var area:Double {get set}
 }
 
-extension Car {
-    mutating func closeWindow() {
-        self.windowsIsOpen = false
-        print("Окна закрыты")
-    }
+protocol CircleProtocol {
+    var radius:Double {get set}
+    var diametr:Double {get set}
+    var perimetr:Double {get set}
+    var area:Double {get set}
 }
 
-extension Car {
-    mutating func startEngine() {
-        self.engineIsOn = true
-        print("Двигатель запущен")
-    }
+protocol Colored{
+    var color: UIColor {get set}
 }
 
-extension Car {
-    mutating func stopEngine() {
-        self.engineIsOn = false
-        print("Двигатель заглушен")
-    }
+protocol Weightabe{
+    var weight: Double {get set}
 }
 
-extension Car {
-    mutating func loadCargo(cargoVolume: Int) {
-        print("Вы собираетесь положить \(cargoVolume) груза в кузов.")
-        let guardCargo = self.filledTrunkVolume + cargoVolume
-        guard  guardCargo < trunkValue else {
-            return print("Вы не можете положить этот груз, в кузове недостаточно места \nОперация не будет выполнена!")
-        }
-        self.filledTrunkVolume += cargoVolume
-        print("После погрузки груза в кузове стало \(guardCargo) груза")
-    }
-}
-
-extension Car {
-    mutating func unloadCargo(cargoVolume: Int) {
-        print("Вы собираетесь выгрузить \(cargoVolume) груза из кузова.")
-        let guardCargo = self.filledTrunkVolume - cargoVolume
-        guard  guardCargo > 0 else {
-           return print("Вы не можете выгрузить этот груз, в кузове его недостаточно \nОперация не будет выполнена!")
-        }
-        self.filledTrunkVolume -= cargoVolume
-        print("После выгрузки груза в кузове осталось \(guardCargo) груза")
-    }
-}
-
-class SportCar: Car {
+class RightTriangle: TriangleProtocol, Weightabe, Colored {
+    var weight: Double
     var color: UIColor
-    var yearOfIssue: UInt
-    var trunkValue: UInt
-    var engineIsOn: Bool
-    var windowsIsOpen: Bool
-    var filledTrunkVolume: Int
+    var AB: Double
+    var BC: Double
+    var AC: Double
+    var perimetr:Double
+    var area:Double
     
-    var maxSpeed: UInt
-    var spoiler: Bool
-    var turbo: Bool
-    
-    init(color: UIColor, yearOfIssue: UInt, trunkValue: UInt, engineIsOn: Bool, windowsIsOpen: Bool, filledTrunkVolume: Int, maxSpeed: UInt, spoiler: Bool, turbo: Bool) {
+    init(AB: Double, BC: Double, weight: Double, color: UIColor){
+        self.AB = AB
+        self.BC = BC
+        self.AC = {sqrt(pow (AB, 2)+pow(BC, 2))}()
+        self.weight = weight
+        self.perimetr = {AB+BC+sqrt(pow (AB, 2)+pow(BC, 2))}()
+        self.area = {(AB*BC)/2}()
         self.color = color
-        self.yearOfIssue = yearOfIssue
-        self.trunkValue = trunkValue
-        self.engineIsOn = engineIsOn
-        self.windowsIsOpen = windowsIsOpen
-        self.filledTrunkVolume = filledTrunkVolume
-        self.maxSpeed = maxSpeed
-        self.spoiler = spoiler
-        self.turbo = turbo
-    }
-}
-extension SportCar: CustomStringConvertible {
-    var description: String {
-        return "Спортивный автомобиль \(yearOfIssue) года выпуска \nМаксимальная скорость - \(maxSpeed) \nМаксимальной вместительностью \(trunkValue) груза \nДвигатель запущен - \(engineIsOn) \nОкна открыты - \(windowsIsOpen)\nИмеет спойлер - \(spoiler) \nИмеет турбо - \(turbo) "
     }
 }
 
-class TrunkCar: Car {
+class Rectangle: QuadrangleProtocol, Weightabe, Colored {
+    var weight: Double
     var color: UIColor
-    var yearOfIssue: UInt
-    var trunkValue: UInt
-    var engineIsOn: Bool
-    var windowsIsOpen: Bool
-    var filledTrunkVolume: Int
+    var AB: Double
+    var BC: Double
+    var CD: Double
+    var AD: Double
+    var perimetr:Double
+    var area:Double
     
-    var rangeOnOneTank: UInt
-    var hydraulicLift: Bool
-    var refrigerator: Bool
     
-    init(color: UIColor, yearOfIssue: UInt, trunkValue: UInt, engineIsOn: Bool, windowsIsOpen: Bool, filledTrunkVolume: Int, rangeOnOneTank: UInt, hydraulicLift: Bool, refrigerator: Bool) {
+    init(AB: Double, BC: Double, weight: Double, color: UIColor) {
+        self.AB = AB
+        self.BC = BC
+        self.CD = AB
+        self.AD = BC
+        self.weight = weight
+        self.perimetr = {(AB+BC)*2}()
+        self.area = {AB*BC}()
         self.color = color
-        self.yearOfIssue = yearOfIssue
-        self.trunkValue = trunkValue
-        self.engineIsOn = engineIsOn
-        self.windowsIsOpen = windowsIsOpen
-        self.filledTrunkVolume = filledTrunkVolume
-        self.rangeOnOneTank = rangeOnOneTank
-        self.hydraulicLift = hydraulicLift
-        self.refrigerator = refrigerator
     }
 }
 
-extension TrunkCar: CustomStringConvertible {
-    var description: String {
-        return "Грузовой автомобиль \(yearOfIssue) года выпуска \nДальность поездки на одном баке - \(rangeOnOneTank) \nМаксимальной вместительностью \(trunkValue) груза \nДвигатель запущен - \(engineIsOn) \nОкна открыты - \(windowsIsOpen) \nИмеет гидравлический лифт - \(hydraulicLift) \nИмеет холодильную установку - \(refrigerator)"
+class Circle: CircleProtocol, Weightabe, Colored {
+    var weight: Double
+    var color: UIColor
+    var radius: Double
+    var diametr: Double
+    var perimetr: Double
+    var area: Double
+    
+    init(radius:Double, weight: Double, color: UIColor) {
+        self.radius = radius
+        self.diametr = {radius*2}()
+        self.perimetr = {2*Double.pi*radius}()
+        self.area = {pow(radius, 2)*Double.pi}()
+        self.weight = weight
+        self.color = color
     }
 }
 
-struct queue<T> {
+struct queue<T: Weightabe> {
     private var elements: [T] = []
+    
+    var totalWeght : Double {
+        var weight = 0.0
+        for element in elements {
+            weight += element.weight
+        }
+        return weight
+    }
+    
     mutating func add(_ element: T) {
         elements.append(element)
     }
-    mutating func delet() -> T? {
+    mutating func deletFirst() -> T? {
         return elements.removeFirst()
+    }
+    mutating func deletLast() -> T? {
+        return elements.removeLast()
+    }
+    mutating func clear() -> T? {
+        return elements.removeAll() as? T
     }
 }
 
@@ -145,17 +131,11 @@ struct queue<T> {
 
 
 
-var garage = queue<SportCar>()
 
-garage.add(SportCar(color: .black, yearOfIssue: 1999, trunkValue: 300, engineIsOn: true, windowsIsOpen: true, filledTrunkVolume: 15, maxSpeed: 200, spoiler: true, turbo: true))
-garage.add(SportCar(color: .red, yearOfIssue: 2020, trunkValue: 150, engineIsOn: false, windowsIsOpen: false, filledTrunkVolume: 24, maxSpeed: 300, spoiler: false, turbo: true))
-garage.add(SportCar(color: .blue, yearOfIssue: 2007, trunkValue: 230, engineIsOn: true, windowsIsOpen: false, filledTrunkVolume: 20, maxSpeed: 240, spoiler: true, turbo: false))
-garage.add(SportCar(color: .red, yearOfIssue: 2014, trunkValue: 400, engineIsOn: false, windowsIsOpen: true, filledTrunkVolume: 45, maxSpeed: 170, spoiler: false, turbo: false))
+var stackTriangles = queue<RightTriangle>()
 
+stackTriangles.add(RightTriangle(AB: 3, BC: 3, weight: 5, color: .green))
+stackTriangles.add(RightTriangle(AB: 4, BC: 6, weight: 9, color: .red))
+stackTriangles.add(RightTriangle(AB: 5, BC: 2, weight: 3, color: .orange))
+stackTriangles.add(RightTriangle(AB: 2, BC: 6, weight: 7, color: .green))
 
-var truckStation = queue<TrunkCar>()
-
-truckStation.add(TrunkCar(color: .black, yearOfIssue: 1993, trunkValue: 20000, engineIsOn: false, windowsIsOpen: false, filledTrunkVolume: 5000, rangeOnOneTank: 1000, hydraulicLift: false, refrigerator: true))
-truckStation.add(TrunkCar(color: .white, yearOfIssue: 1997, trunkValue: 25000, engineIsOn: true, windowsIsOpen: false, filledTrunkVolume: 8900, rangeOnOneTank: 980, hydraulicLift: true, refrigerator: false))
-truckStation.add(TrunkCar(color: .gray, yearOfIssue: 2004, trunkValue: 59000, engineIsOn: false, windowsIsOpen: false, filledTrunkVolume: 45000, rangeOnOneTank: 1300, hydraulicLift: true, refrigerator: true))
-truckStation.add(TrunkCar(color: .brown, yearOfIssue: 2012, trunkValue: 34000, engineIsOn: false, windowsIsOpen: false, filledTrunkVolume: 3000, rangeOnOneTank: 840, hydraulicLift: false, refrigerator: false))

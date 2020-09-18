@@ -55,6 +55,12 @@ class RightTriangle: TriangleProtocol, Weightabe, Colored {
     }
 }
 
+extension RightTriangle: CustomStringConvertible {
+    var description: String {
+        return "\nПрямоугольный треугольник со сторонами AB:\(AB), BC:\(BC), AC:\(NSString(format: "%.2f", AC)) \nПериметр треугольника: \(NSString(format: "%.2f", perimetr)) \nПлощадьТреугольника: \(NSString(format: "%.2f", area)) \nВес объекта: \(weight)"
+    }
+}
+
 class Rectangle: QuadrangleProtocol, Weightabe, Colored {
     var weight: Double
     var color: UIColor
@@ -78,6 +84,12 @@ class Rectangle: QuadrangleProtocol, Weightabe, Colored {
     }
 }
 
+extension Rectangle: CustomStringConvertible {
+    var description: String {
+        return "\nПрямоугольник со сторонами AB:\(AB), BC:\(BC), CD:\(CD), AD:\(AD) \nПериметр прямоугольника: \(perimetr) \nПлощадь прямоугольника: \(NSString(format: "%.2f", area)) \nВес объекта: \(weight)"
+    }
+}
+
 class Circle: CircleProtocol, Weightabe, Colored {
     var weight: Double
     var color: UIColor
@@ -96,6 +108,12 @@ class Circle: CircleProtocol, Weightabe, Colored {
     }
 }
 
+extension Circle: CustomStringConvertible {
+    var description: String {
+        return "\nКруг с радиусом:\(radius), диаметром:\(diametr)\nДлина окружности: \(NSString(format: "%.2f", perimetr)) \nПлощадь круга: \(NSString(format: "%.2f", area)) \nВес объекта: \(weight)"
+    }
+}
+
 struct queue<T: Weightabe> {
     private var elements: [T] = []
     
@@ -107,30 +125,39 @@ struct queue<T: Weightabe> {
         return weight
     }
     
+//Задание 2
+//Добавить ему несколько методов высшего порядка, полезных для этой коллекции (пример: filter для массивов)
+    
     mutating func add(_ element: T) {
         elements.append(element)
     }
     mutating func deletFirst() -> T? {
+        print("Удален первый добавленный элемент")
         return elements.removeFirst()
     }
     mutating func deletLast() -> T? {
+        print("Удален последний добавленный элемент")
         return elements.removeLast()
     }
     mutating func clear() -> T? {
+        print("Удалены все элементы структуры")
         return elements.removeAll() as? T
     }
-}
-
-//Задание 2
-//Добавить ему несколько методов высшего порядка, полезных для этой коллекции (пример: filter для массивов)
-
-
-
+    
 //Задание 3*
 //Добавить свой subscript, который будет возвращать nil в случае обращения к несуществующему индексу.
+    
+    subscript(indices: UInt ...) -> Void {
+        var weight = 0.0
 
-
-
+        for index in indices where index < self.elements.count {
+            weight += self.elements[Int(index)].weight
+        }
+        return print("Суммарный вес объектов: \(weight)")
+    }
+    
+    
+}
 
 var stackTriangles = queue<RightTriangle>()
 
@@ -139,3 +166,27 @@ stackTriangles.add(RightTriangle(AB: 4, BC: 6, weight: 9, color: .red))
 stackTriangles.add(RightTriangle(AB: 5, BC: 2, weight: 3, color: .orange))
 stackTriangles.add(RightTriangle(AB: 2, BC: 6, weight: 7, color: .green))
 
+print(stackTriangles)
+print(stackTriangles[0,2,3])
+
+var stackRectangles = queue<Rectangle>()
+
+stackRectangles.add(Rectangle(AB: 4, BC: 5, weight: 7, color: .black))
+stackRectangles.add(Rectangle(AB: 3, BC: 8, weight: 9, color: .red))
+stackRectangles.add(Rectangle(AB: 6, BC: 4, weight: 5, color: .blue))
+stackRectangles.add(Rectangle(AB: 3, BC: 3, weight: 10, color: .white))
+stackRectangles.add(Rectangle(AB: 10, BC: 3, weight: 12, color: .blue))
+
+print(stackRectangles)
+print(stackRectangles[1,4])
+
+var stackCircles = queue<Circle>()
+
+stackCircles.add(Circle(radius: 3, weight: 5, color: .black))
+stackCircles.add(Circle(radius: 4, weight: 7, color: .red))
+stackCircles.add(Circle(radius: 5, weight: 9, color: .brown))
+stackCircles.add(Circle(radius: 6, weight: 11, color: .green))
+stackCircles.add(Circle(radius: 7, weight: 13, color: .white))
+
+print(stackCircles)
+print(stackCircles[0,2,3])

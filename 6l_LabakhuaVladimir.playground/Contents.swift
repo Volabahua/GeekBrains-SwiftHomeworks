@@ -150,6 +150,7 @@ struct queue<T: Weightabe> {
 //Задание 3*
 //Добавить свой subscript, который будет возвращать nil в случае обращения к несуществующему индексу.
     
+    //Позволяет получить суммарный вес хранимых элементов с определенными индексами
     subscript(indices: UInt ...) -> Void {
         var weight = 0.0
         for index in indices where index < self.elements.count {
@@ -157,7 +158,8 @@ struct queue<T: Weightabe> {
         }
         return print("Суммарный вес объектов: \(weight)")
     }
-    
+
+    //Позволяет получить информацию о хранимом элементе по его индексу
     subscript(index: UInt) -> Void? {
         guard index < self.elements.count else {return nil}
         return print("Элемент \(index) в структуре:\(self.elements[Int(index)])")

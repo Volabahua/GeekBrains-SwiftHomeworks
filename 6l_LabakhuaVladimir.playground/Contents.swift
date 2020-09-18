@@ -55,9 +55,10 @@ class RightTriangle: TriangleProtocol, Weightabe, Colored {
     }
 }
 
+//Настраиваем вывод класса в консоль
 extension RightTriangle: CustomStringConvertible {
     var description: String {
-        return "\nПрямоугольный треугольник со сторонами AB:\(AB), BC:\(BC), AC:\(NSString(format: "%.2f", AC)) \nПериметр треугольника: \(NSString(format: "%.2f", perimetr)) \nПлощадьТреугольника: \(NSString(format: "%.2f", area)) \nВес объекта: \(weight)"
+        return "\nПрямоугольный треугольник со сторонами AB: \(AB), BC: \(BC), AC: \(NSString(format: "%.2f", AC)) \nПериметр треугольника: \(NSString(format: "%.2f", perimetr)) \nПлощадьТреугольника: \(NSString(format: "%.2f", area)) \nВес объекта: \(weight)"
     }
 }
 
@@ -84,9 +85,10 @@ class Rectangle: QuadrangleProtocol, Weightabe, Colored {
     }
 }
 
+//Настраиваем вывод класса в консоль
 extension Rectangle: CustomStringConvertible {
     var description: String {
-        return "\nПрямоугольник со сторонами AB:\(AB), BC:\(BC), CD:\(CD), AD:\(AD) \nПериметр прямоугольника: \(perimetr) \nПлощадь прямоугольника: \(NSString(format: "%.2f", area)) \nВес объекта: \(weight)"
+        return "\nПрямоугольник со сторонами AB: \(AB), BC: \(BC), CD: \(CD), AD: \(AD) \nПериметр прямоугольника: \(perimetr) \nПлощадь прямоугольника: \(NSString(format: "%.2f", area)) \nВес объекта: \(weight)"
     }
 }
 
@@ -108,9 +110,10 @@ class Circle: CircleProtocol, Weightabe, Colored {
     }
 }
 
+//Настраиваем вывод класса в консоль
 extension Circle: CustomStringConvertible {
     var description: String {
-        return "\nКруг с радиусом:\(radius), диаметром:\(diametr)\nДлина окружности: \(NSString(format: "%.2f", perimetr)) \nПлощадь круга: \(NSString(format: "%.2f", area)) \nВес объекта: \(weight)"
+        return "\nКруг с радиусом: \(radius), диаметром: \(diametr)\nДлина окружности: \(NSString(format: "%.2f", perimetr)) \nПлощадь круга: \(NSString(format: "%.2f", area)) \nВес объекта: \(weight)"
     }
 }
 
@@ -149,44 +152,62 @@ struct queue<T: Weightabe> {
     
     subscript(indices: UInt ...) -> Void {
         var weight = 0.0
-
         for index in indices where index < self.elements.count {
             weight += self.elements[Int(index)].weight
         }
         return print("Суммарный вес объектов: \(weight)")
     }
     
+    subscript(index: UInt) -> Void? {
+        guard index < self.elements.count else {return nil}
+        return print("Элемент \(index) в структуре:\(self.elements[Int(index)])")
+    }
     
 }
 
+//Создадим структуру которая хранит Треугольники
 var stackTriangles = queue<RightTriangle>()
 
+//Добавим треугольники
 stackTriangles.add(RightTriangle(AB: 3, BC: 3, weight: 5, color: .green))
 stackTriangles.add(RightTriangle(AB: 4, BC: 6, weight: 9, color: .red))
 stackTriangles.add(RightTriangle(AB: 5, BC: 2, weight: 3, color: .orange))
 stackTriangles.add(RightTriangle(AB: 2, BC: 6, weight: 7, color: .green))
 
+//Выведем почученное значение и общий вес объектов
 print(stackTriangles)
-print(stackTriangles[0,2,3])
+print(stackTriangles[0,1,3])
+print(stackTriangles[2])
 
+//Создадим структуру которая хранит Прямоугольники
 var stackRectangles = queue<Rectangle>()
 
+//Добавим прямоугольники
 stackRectangles.add(Rectangle(AB: 4, BC: 5, weight: 7, color: .black))
 stackRectangles.add(Rectangle(AB: 3, BC: 8, weight: 9, color: .red))
 stackRectangles.add(Rectangle(AB: 6, BC: 4, weight: 5, color: .blue))
 stackRectangles.add(Rectangle(AB: 3, BC: 3, weight: 10, color: .white))
 stackRectangles.add(Rectangle(AB: 10, BC: 3, weight: 12, color: .blue))
 
+//Выведем почученное значение и общий вес объектов
 print(stackRectangles)
 print(stackRectangles[1,4])
+print(stackRectangles[1])
 
+//Создадим структуру которая хранит Окружности
 var stackCircles = queue<Circle>()
 
+//Добавим окружности
 stackCircles.add(Circle(radius: 3, weight: 5, color: .black))
 stackCircles.add(Circle(radius: 4, weight: 7, color: .red))
 stackCircles.add(Circle(radius: 5, weight: 9, color: .brown))
 stackCircles.add(Circle(radius: 6, weight: 11, color: .green))
 stackCircles.add(Circle(radius: 7, weight: 13, color: .white))
 
+//Выведем почученное значение и общий вес объектов
 print(stackCircles)
 print(stackCircles[0,2,3])
+print(stackCircles[3])
+print(stackCircles[10])
+
+//Конец домашнего задания

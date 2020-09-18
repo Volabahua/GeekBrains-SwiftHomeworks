@@ -54,25 +54,21 @@ protocol MakingCoffe: Storage {
     var latteSmallRequiredCoffe: Int {get}
     var latteSmallRequiredMilk: Int {get}
     var latteSmallRequiredSugar: Int {get}
-    
     var latteMediumRequiredCoffe: Int {get}
     var latteMediumRequiredMilk: Int {get}
     var latteMediumRequiredSugar: Int {get}
-    
     var latteBigRequiredCoffe: Int {get}
     var latteBigRequiredMilk: Int {get}
     var latteBigRequiredSugar: Int {get}
     
     var americanoMediumRequiredCoffe: Int {get}
     var americanoMediumRequiredSugar: Int {get}
-    
     var americanoBigRequiredCoffe: Int {get}
     var americanoBigRequiredSugar: Int {get}
     
     var cappuchinoMediumRequiredCoffe: Int {get}
     var cappuchinoMediumRequiredMilk: Int {get}
     var cappuchinoMediumRequiredSugar: Int {get}
-    
     var cappuchinoBigRequiredCoffe: Int {get}
     var cappuchinoBigRequiredMilk: Int {get}
     var cappuchinoBigRequiredSugar: Int {get}
@@ -86,25 +82,21 @@ extension MakingCoffe {
     var latteSmallRequiredCoffe: Int {2}
     var latteSmallRequiredMilk: Int {2}
     var latteSmallRequiredSugar: Int {2}
-    
     var latteMediumRequiredCoffe: Int {3}
     var latteMediumRequiredMilk: Int {3}
     var latteMediumRequiredSugar: Int {3}
-    
     var latteBigRequiredCoffe: Int {5}
     var latteBigRequiredMilk: Int {5}
     var latteBigRequiredSugar: Int {5}
     
     var americanoMediumRequiredCoffe: Int {4}
     var americanoMediumRequiredSugar: Int {3}
-    
     var americanoBigRequiredCoffe: Int {5}
     var americanoBigRequiredSugar: Int {4}
     
     var cappuchinoMediumRequiredCoffe: Int {3}
     var cappuchinoMediumRequiredMilk: Int {5}
     var cappuchinoMediumRequiredSugar: Int {3}
-    
     var cappuchinoBigRequiredCoffe: Int {4}
     var cappuchinoBigRequiredMilk: Int {7}
     var cappuchinoBigRequiredSugar: Int {4}
@@ -237,18 +229,18 @@ extension MakingCoffe {
 
 //Приготовление Эспрессо
 extension MakingCoffe {
-    mutating func makeEspresso(withSugar:Bool) -> (Void? , CoffeMachineErrors?) {
+    mutating func makeEspresso(withSugar:Bool) -> (Void?, CoffeMachineErrors?) {
         if withSugar == true {
             print("Вы выбрали Кофе Еспрессо с сахаром ")
         } else {
             print("Вы выбрали Кофе Еспрессо без сахара")
         }
         
-        guard self.coffe >= americanoBigRequiredCoffe else {return (print("В аппарате закончилось кофе"), .notEnoughCoffe)}
-        self.coffe -= americanoBigRequiredCoffe
+        guard self.coffe >= espressoRequiredCoffe else {return (print("В аппарате закончилось кофе"), .notEnoughCoffe)}
+        self.coffe -= espressoRequiredCoffe
         if withSugar == true {
-            guard self.sugar >= americanoBigRequiredSugar else {return (print("В аппарате закончился сахар"), .notEnoughSugar)}
-            self.sugar -= americanoBigRequiredSugar
+            guard self.sugar >= espressoRequiredSugar else {return (print("В аппарате закончился сахар"), .notEnoughSugar)}
+            self.sugar -= espressoRequiredSugar
         }
         return (print("Вы купили Кофе Еспрессо "), nil )
     }
@@ -270,7 +262,7 @@ class CoffeMachine: MakingCoffe, Storage {
 //Вывод состояния хранилища кофемашины
 extension CoffeMachine: CustomStringConvertible {
     var description: String {
-        return "На данный момент в кофемашине\nКофе: \(coffe)\nМолока: \(milk)\nСахара: \(sugar)\n"
+        return "\nНа данный момент в кофемашине\nКофе: \(coffe)\nМолока: \(milk)\nСахара: \(sugar)\n"
     }
 }
 
@@ -287,6 +279,9 @@ print(Vender)
 Vender.makeAmericano(size: .medium, withSugar: true)
 Vender.refillCoffe(10)
 Vender.makeAmericano(size: .medium, withSugar: true)
+print(Vender)
 
 //Задание 2
 //Придумать класс, методы которого могут выбрасывать ошибки. Реализуйте несколько throws-функций. Вызовите их и обработайте результат вызова при помощи конструкции try/catch.
+
+

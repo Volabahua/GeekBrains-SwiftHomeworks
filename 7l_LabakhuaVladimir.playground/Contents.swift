@@ -3,6 +3,9 @@ import UIKit
 //Задание 1
 //Придумать класс, методы которого могут завершаться неудачей и возвращать либо значение, либо ошибку Error?. Реализовать их вызов и обработать результат метода при помощи конструкции if let, или guard let.
 
+//Задание 2
+//Придумать класс, методы которого могут выбрасывать ошибки. Реализуйте несколько throws-функций. Вызовите их и обработайте результат вызова при помощи конструкции try/catch.
+
 //Выбор размеров приготавливаемого кофе
 enum CoffeSize: String {
     case small = "Маленький"
@@ -16,6 +19,7 @@ enum CoffeMachineErrors: Error {
     case notEnoughCoffe
     case notEnoughMilk
     case invalidSize
+    case notEnoughStorageSpace
 }
 
 //Протокол хранения ингридиентов в хранилище
@@ -23,11 +27,18 @@ protocol Storage {
     var sugar: Int {get set}
     var coffe: Int {get set}
     var milk: Int {get set}
+    
+    var sugarStorage: Int {get set}
+    var coffeStorage: Int {get set}
+    var milkStorage: Int {get set}
 }
 
 //Пополнить кофе в хранилище
 extension Storage {
-    mutating func refillCoffe(_ refill: Int) {
+    mutating func refillCoffe(_ refill: Int) throws {
+        guard ({self.coffe + refill})() < coffeStorage else {
+            throw CoffeMachineErrors.notEnoughStorageSpace
+        }
         print("Хранилище Кофе пополнено на: \(refill)")
         return self.coffe += refill
     }
@@ -35,7 +46,10 @@ extension Storage {
 
 //Пополнить молоко в хранилище
 extension Storage {
-    mutating func refillMilk(_ refill: Int) {
+    mutating func refillMilk(_ refill: Int) throws {
+        guard ({self.milk + refill})() < milkStorage else {
+             throw CoffeMachineErrors.notEnoughStorageSpace
+         }
         print("Хранилище Молока пополнено на: \(refill)")
         return self.milk += refill
     }
@@ -43,7 +57,10 @@ extension Storage {
 
 //Пополнить сахар в хранилище
 extension Storage {
-    mutating func refillSugar(_ refill: Int) {
+    mutating func refillSugar(_ refill: Int) throws {
+        guard ({self.sugar + refill})() < sugarStorage else {
+             throw CoffeMachineErrors.notEnoughStorageSpace
+         }
         print("Хранилище Сахара пополнено на: \(refill)")
         return self.sugar += refill
     }
@@ -51,58 +68,58 @@ extension Storage {
 
 //Используемые ингридиенты для приготовления кофе
 protocol MakingCoffe: Storage {
-    var latteSmallRequiredCoffe: Int {get}
-    var latteSmallRequiredMilk: Int {get}
-    var latteSmallRequiredSugar: Int {get}
-    var latteMediumRequiredCoffe: Int {get}
-    var latteMediumRequiredMilk: Int {get}
-    var latteMediumRequiredSugar: Int {get}
-    var latteBigRequiredCoffe: Int {get}
-    var latteBigRequiredMilk: Int {get}
-    var latteBigRequiredSugar: Int {get}
+    var latteSmallRequiredCoffe: Int {get}//Маленький латте
+    var latteSmallRequiredMilk: Int {get}//Маленький латте
+    var latteSmallRequiredSugar: Int {get}//Маленький латте
+    var latteMediumRequiredCoffe: Int {get}//Средний латте
+    var latteMediumRequiredMilk: Int {get}//Средний латте
+    var latteMediumRequiredSugar: Int {get}//Средний латте
+    var latteBigRequiredCoffe: Int {get}//Большой латте
+    var latteBigRequiredMilk: Int {get}//Большой латте
+    var latteBigRequiredSugar: Int {get}//Большой латте
     
-    var americanoMediumRequiredCoffe: Int {get}
-    var americanoMediumRequiredSugar: Int {get}
-    var americanoBigRequiredCoffe: Int {get}
-    var americanoBigRequiredSugar: Int {get}
+    var americanoMediumRequiredCoffe: Int {get}//Средний американо
+    var americanoMediumRequiredSugar: Int {get}//Средний американо
+    var americanoBigRequiredCoffe: Int {get}//Большой американо
+    var americanoBigRequiredSugar: Int {get}//Большой американо
     
-    var cappuchinoMediumRequiredCoffe: Int {get}
-    var cappuchinoMediumRequiredMilk: Int {get}
-    var cappuchinoMediumRequiredSugar: Int {get}
-    var cappuchinoBigRequiredCoffe: Int {get}
-    var cappuchinoBigRequiredMilk: Int {get}
-    var cappuchinoBigRequiredSugar: Int {get}
+    var cappuchinoMediumRequiredCoffe: Int {get}//Средний каппучино
+    var cappuchinoMediumRequiredMilk: Int {get}//Средний каппучино
+    var cappuchinoMediumRequiredSugar: Int {get}//Средний каппучино
+    var cappuchinoBigRequiredCoffe: Int {get}//Большой каппучино
+    var cappuchinoBigRequiredMilk: Int {get}//Большой каппучино
+    var cappuchinoBigRequiredSugar: Int {get}//Большой каппучино
     
-    var espressoRequiredCoffe: Int {get}
-    var espressoRequiredSugar: Int {get}
+    var espressoRequiredCoffe: Int {get}//Еспрессо
+    var espressoRequiredSugar: Int {get}//Еспрессо
 }
 
 //Рецепты для приготовления кофе
 extension MakingCoffe {
-    var latteSmallRequiredCoffe: Int {2}
-    var latteSmallRequiredMilk: Int {2}
-    var latteSmallRequiredSugar: Int {2}
-    var latteMediumRequiredCoffe: Int {3}
-    var latteMediumRequiredMilk: Int {3}
-    var latteMediumRequiredSugar: Int {3}
-    var latteBigRequiredCoffe: Int {5}
-    var latteBigRequiredMilk: Int {5}
-    var latteBigRequiredSugar: Int {5}
+    var latteSmallRequiredCoffe: Int {2}//Маленький латте
+    var latteSmallRequiredMilk: Int {2}//Маленький латте
+    var latteSmallRequiredSugar: Int {2}//Маленький латте
+    var latteMediumRequiredCoffe: Int {3}//Средний латте
+    var latteMediumRequiredMilk: Int {3}//Средний латте
+    var latteMediumRequiredSugar: Int {3}//Средний латте
+    var latteBigRequiredCoffe: Int {5}//Большой латте
+    var latteBigRequiredMilk: Int {5}//Большой латте
+    var latteBigRequiredSugar: Int {5}//Большой латте
     
-    var americanoMediumRequiredCoffe: Int {4}
-    var americanoMediumRequiredSugar: Int {3}
-    var americanoBigRequiredCoffe: Int {5}
-    var americanoBigRequiredSugar: Int {4}
+    var americanoMediumRequiredCoffe: Int {4}//Средний американо
+    var americanoMediumRequiredSugar: Int {3}//Средний американо
+    var americanoBigRequiredCoffe: Int {5}//Большой американо
+    var americanoBigRequiredSugar: Int {4}//Большой американо
     
-    var cappuchinoMediumRequiredCoffe: Int {3}
-    var cappuchinoMediumRequiredMilk: Int {5}
-    var cappuchinoMediumRequiredSugar: Int {3}
-    var cappuchinoBigRequiredCoffe: Int {4}
-    var cappuchinoBigRequiredMilk: Int {7}
-    var cappuchinoBigRequiredSugar: Int {4}
+    var cappuchinoMediumRequiredCoffe: Int {3}//Средний каппучино
+    var cappuchinoMediumRequiredMilk: Int {5}//Средний каппучино
+    var cappuchinoMediumRequiredSugar: Int {3}//Средний каппучино
+    var cappuchinoBigRequiredCoffe: Int {4}//Большой каппучино
+    var cappuchinoBigRequiredMilk: Int {7}//Большой каппучино
+    var cappuchinoBigRequiredSugar: Int {4}//Большой каппучино
     
-    var espressoRequiredCoffe: Int {4}
-    var espressoRequiredSugar: Int {2}
+    var espressoRequiredCoffe: Int {4}//Еспрессо
+    var espressoRequiredSugar: Int {2}//Еспрессо
 }
 
 //Приготовление Латте
@@ -118,35 +135,35 @@ extension MakingCoffe {
         switch size {
         case .small:
             guard self.coffe >= latteSmallRequiredCoffe else {return (print("В аппарате закончилось кофе"), .notEnoughCoffe)}
-            self.coffe -= latteSmallRequiredCoffe
             guard self.milk >= latteSmallRequiredMilk else {return (print("В аппарате закончилось молоко"), .notEnoughMilk)}
-            self.milk -= latteSmallRequiredMilk
             if withSugar == true {
                 guard self.sugar >= latteSmallRequiredSugar else {return (print("В аппарате закончился сахар"), .notEnoughSugar)}
                 self.sugar -= latteSmallRequiredSugar
             }
+            self.coffe -= latteSmallRequiredCoffe
+            self.milk -= latteSmallRequiredMilk
             return (print("Вы купили \(size.rawValue) Кофе Латте "), nil )
             
         case .medium:
             guard self.coffe >= latteMediumRequiredCoffe else {return (print("В аппарате закончилось кофе"), .notEnoughCoffe)}
-            self.coffe -= latteMediumRequiredCoffe
             guard self.milk >= latteMediumRequiredMilk else {return (print("В аппарате закончилось молоко"), .notEnoughMilk)}
-            self.milk -= latteMediumRequiredMilk
             if withSugar == true {
                 guard self.sugar >= latteMediumRequiredSugar else {return (print("В аппарате закончился сахар"), .notEnoughSugar)}
                 self.sugar -= latteMediumRequiredSugar
             }
+            self.coffe -= latteMediumRequiredCoffe
+            self.milk -= latteMediumRequiredMilk
             return (print("Вы купили \(size.rawValue) Кофе Латте "), nil )
             
         case .big:
             guard self.coffe >= latteBigRequiredCoffe else {return (print("В аппарате закончилось кофе"), .notEnoughCoffe)}
-            self.coffe -= latteBigRequiredCoffe
             guard self.milk >= latteBigRequiredMilk else {return (print("В аппарате закончилось молоко"), .notEnoughMilk)}
-            self.milk -= latteBigRequiredMilk
             if withSugar == true {
                 guard self.sugar >= latteBigRequiredSugar else {return (print("В аппарате закончился сахар"), .notEnoughSugar)}
                 self.sugar -= latteBigRequiredSugar
             }
+            self.coffe -= latteBigRequiredCoffe
+            self.milk -= latteBigRequiredMilk
             return (print("Вы купили \(size.rawValue) Кофе Латте "), nil )
         }
     }
@@ -169,21 +186,21 @@ extension MakingCoffe {
             
         case .medium:
             guard self.coffe >= americanoMediumRequiredCoffe else {return (print("В аппарате закончилось кофе"), .notEnoughCoffe)}
-            self.coffe -= americanoMediumRequiredCoffe
             if withSugar == true {
                 guard self.sugar >= americanoMediumRequiredSugar else {return (print("В аппарате закончился сахар"), .notEnoughSugar)}
                 self.sugar -= americanoMediumRequiredSugar
             }
-            return (print("Вы купили \(size.rawValue) Кофе Латте "), nil )
+            self.coffe -= americanoMediumRequiredCoffe
+            return (print("Вы купили \(size.rawValue) Кофе Американо "), nil )
             
         case .big:
             guard self.coffe >= americanoBigRequiredCoffe else {return (print("В аппарате закончилось кофе"), .notEnoughCoffe)}
-            self.coffe -= americanoBigRequiredCoffe
             if withSugar == true {
                 guard self.sugar >= americanoBigRequiredSugar else {return (print("В аппарате закончился сахар"), .notEnoughSugar)}
                 self.sugar -= americanoBigRequiredSugar
             }
-            return (print("Вы купили \(size.rawValue) Кофе Латте "), nil )
+            self.coffe -= americanoBigRequiredCoffe
+            return (print("Вы купили \(size.rawValue) Кофе Американо "), nil )
         }
     }
 }
@@ -204,24 +221,24 @@ extension MakingCoffe {
             
         case .medium:
             guard self.coffe >= cappuchinoMediumRequiredCoffe else {return (print("В аппарате закончилось кофе"), .notEnoughCoffe)}
-            self.coffe -= cappuchinoMediumRequiredCoffe
             guard self.milk >= cappuchinoBigRequiredMilk else {return (print("В аппарате закончилось молоко"), .notEnoughMilk)}
-            self.milk -= cappuchinoBigRequiredMilk
             if withSugar == true {
                 guard self.sugar >= cappuchinoMediumRequiredSugar else {return (print("В аппарате закончился сахар"), .notEnoughSugar)}
                 self.sugar -= cappuchinoMediumRequiredSugar
             }
+            self.coffe -= cappuchinoMediumRequiredCoffe
+            self.milk -= cappuchinoBigRequiredMilk
             return (print("Вы купили \(size.rawValue) Кофе Каппучино "), nil )
             
         case .big:
             guard self.coffe >= cappuchinoBigRequiredCoffe else {return (print("В аппарате закончилось кофе"), .notEnoughCoffe)}
-            self.coffe -= cappuchinoBigRequiredCoffe
             guard self.milk >= cappuchinoBigRequiredMilk else {return (print("В аппарате закончилось молоко"), .notEnoughMilk)}
-            self.milk -= cappuchinoBigRequiredMilk
             if withSugar == true {
                 guard self.sugar >= cappuchinoBigRequiredSugar else {return (print("В аппарате закончился сахар"), .notEnoughSugar)}
                 self.sugar -= cappuchinoBigRequiredSugar
             }
+            self.coffe -= cappuchinoBigRequiredCoffe
+            self.milk -= cappuchinoBigRequiredMilk
             return (print("Вы купили \(size.rawValue) Кофе Каппучино "), nil )
         }
     }
@@ -237,50 +254,98 @@ extension MakingCoffe {
         }
         
         guard self.coffe >= espressoRequiredCoffe else {return (print("В аппарате закончилось кофе"), .notEnoughCoffe)}
-        self.coffe -= espressoRequiredCoffe
         if withSugar == true {
             guard self.sugar >= espressoRequiredSugar else {return (print("В аппарате закончился сахар"), .notEnoughSugar)}
             self.sugar -= espressoRequiredSugar
         }
+        self.coffe -= espressoRequiredCoffe
         return (print("Вы купили Кофе Еспрессо "), nil )
     }
 }
 
 //Кофемашина для приготовления кофе
 class CoffeMachine: MakingCoffe, Storage {
-    var sugar: Int
     var coffe: Int
     var milk: Int
+    var sugar: Int
     
-    init(sugar: Int, coffe: Int, milk:Int) {
-        self.coffe = coffe
-        self.milk = milk
-        self.sugar = sugar
+
+    var coffeStorage: Int
+    var milkStorage: Int
+    var sugarStorage: Int
+    
+    
+    init(sugarStorage: Int, coffeStorage: Int, milkStorage:Int) {
+        self.coffeStorage = coffeStorage
+        self.milkStorage = milkStorage
+        self.sugarStorage = sugarStorage
+        self.coffe = 0
+        self.milk = 0
+        self.sugar = 0
     }
 }
 
 //Вывод состояния хранилища кофемашины
 extension CoffeMachine: CustomStringConvertible {
     var description: String {
-        return "\nНа данный момент в кофемашине\nКофе: \(coffe)\nМолока: \(milk)\nСахара: \(sugar)\n"
+        return "\nНа данный момент в кофемашине\nКофе: \(coffe)/\(coffeStorage)\nМолока: \(milk)/\(milkStorage)\nСахара: \(sugar)/\(sugarStorage)\n"
     }
 }
 
-//Создадим экземпляр кофе машины и заполним его ингридиентами каждого типа
-var Vender = CoffeMachine(sugar: 10, coffe: 10, milk: 10)
+//Создадим экземпляр кофе машины с хранилищем определенной вместимости
+var Vender = CoffeMachine(sugarStorage: 50, coffeStorage: 50, milkStorage: 50)
 
+//Заполним хранилище кофемешины
+do {
+    try Vender.refillCoffe(30)
+} catch CoffeMachineErrors.notEnoughStorageSpace {
+    print("Невозможно пополнить хранилище. Недостаточно свободного места.")
+}
+
+do {
+    try Vender.refillMilk(30)
+} catch CoffeMachineErrors.notEnoughStorageSpace {
+    print("Невозможно пополнить хранилище. Недостаточно свободного места.")
+}
+
+do {
+    try Vender.refillSugar(30)
+} catch CoffeMachineErrors.notEnoughStorageSpace {
+    print("Невозможно пополнить хранилище. Недостаточно свободного места.")
+}
+
+//Приготовим несколько чашек кофе периодически наблюдая за изменениями в хранилище
 print(Vender)
 Vender.makeLatte(size: .small,withSugar: false)
 print(Vender)
 Vender.makeEspresso(withSugar: false)
 print(Vender)
-Vender.makeCappuchino(size: .medium, withSugar: true)
+Vender.makeCappuchino(size: .big, withSugar: true)
 print(Vender)
-Vender.makeAmericano(size: .medium, withSugar: true)
-Vender.refillCoffe(10)
+Vender.makeLatte(size: .medium, withSugar: false)
+print(Vender)
+Vender.makeAmericano(size: .small, withSugar: false)
 Vender.makeAmericano(size: .medium, withSugar: true)
 print(Vender)
 
-//Задание 2
-//Придумать класс, методы которого могут выбрасывать ошибки. Реализуйте несколько throws-функций. Вызовите их и обработайте результат вызова при помощи конструкции try/catch.
+//Заполним хранилище еще раз и поймаем ошибку
+do {
+    try Vender.refillCoffe(30)
+} catch CoffeMachineErrors.notEnoughStorageSpace {
+    print("Невозможно пополнить хранилище. Недостаточно свободного места.")
+}
 
+do {
+    try Vender.refillMilk(30)
+} catch CoffeMachineErrors.notEnoughStorageSpace {
+    print("Невозможно пополнить хранилище. Недостаточно свободного места.")
+}
+
+do {
+    try Vender.refillSugar(30)
+} catch CoffeMachineErrors.notEnoughStorageSpace {
+    print("Невозможно пополнить хранилище. Недостаточно свободного места.")
+}
+
+//Контрольная проверка состояния хранилища кофемашины
+print(Vender)
